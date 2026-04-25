@@ -1,20 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Eye, EyeOff, Globe, Accessibility, ArrowLeft } from "lucide-react";
 import emblem from "@/assets/kenya-emblem.png";
 import sideImage from "@/assets/login-side.jpg";
 
-export const Route = createFileRoute("/login")({
-  head: () => ({
-    meta: [
-      { title: "Sign in — eCitizen Kenya" },
-      { name: "description", content: "Sign in to your eCitizen account. One login for all government services." },
-    ],
-  }),
-  component: LoginPage,
-});
-
-function LoginPage() {
+export default function LoginPage() {
   const [showPwd, setShowPwd] = useState(false);
 
   return (

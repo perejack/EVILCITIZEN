@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Menu, X, Search, Globe, Accessibility } from "lucide-react";
 import logo from "@/assets/logo.svg";
@@ -30,21 +30,21 @@ export function SiteHeader() {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-          <Link to="/" className="flex items-center shrink-0" aria-label="eCitizen Kenya">
+          <Link to="/" className="flex items-center shrink-0" aria-label="eCitizen Kenya" onClick={() => setOpen(false)}>
             <img src="https://accounts.ecitizen.go.ke/en/images/logo.svg" alt="eCitizen Kenya" className="h-10 sm:h-12 w-auto" />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">
             {nav.map((n) => (
-              <Link
+              <NavLink
                 key={n.to}
                 to={n.to}
-                activeOptions={{ exact: n.to === "/" }}
-                activeProps={{ className: "text-accent bg-accent/10" }}
-                className="px-4 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                className={({ isActive }: { isActive: boolean }) =>
+                  `px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:text-foreground hover:bg-muted ${isActive ? "text-accent bg-accent/10" : "text-muted-foreground"}`
+                }
               >
                 {n.label}
-              </Link>
+              </NavLink>
             ))}
           </nav>
 
@@ -97,8 +97,6 @@ export function SiteHeader() {
                   key={n.to}
                   to={n.to}
                   onClick={() => setOpen(false)}
-                  activeOptions={{ exact: n.to === "/" }}
-                  activeProps={{ className: "text-accent bg-accent/10" }}
                   className="px-4 py-3 rounded-lg text-base font-medium text-foreground hover:bg-muted transition-colors"
                 >
                   {n.label}

@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { ArrowLeft, ArrowRight, CheckCircle2, Download, Loader2, ShieldCheck, Sparkles, FileCheck, Database, Shield, Fingerprint } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -6,18 +6,6 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { MpesaModal } from "@/components/MpesaModal";
 import { CrbCertificate } from "@/components/CrbCertificate";
 import { generateCrbSerial, todayLong, type CrbData } from "@/lib/certificates";
-
-export const Route = createFileRoute("/crb")({
-  head: () => ({
-    meta: [
-      { title: "CRB Clearance Certificate — eCitizen Kenya" },
-      { name: "description", content: "Apply for your Creditinfo CRB Clearance Certificate online. Instant generation after secure M-PESA payment." },
-      { property: "og:title", content: "CRB Clearance Certificate — eCitizen Kenya" },
-      { property: "og:description", content: "Get your CRB clearance certificate in minutes." },
-    ],
-  }),
-  component: CrbPage,
-});
 
 type View = "intro" | "apply" | "processing" | "pay" | "issued";
 
@@ -27,7 +15,7 @@ const processingSteps = [
   { icon: Shield, label: "Verifying clearance status", duration: 2000 },
 ];
 
-function CrbPage() {
+export default function CrbPage() {
   const [view, setView] = useState<View>("intro");
   const [pay, setPay] = useState(false);
   const [downloading, setDownloading] = useState(false);

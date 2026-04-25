@@ -1,5 +1,5 @@
 import { Search } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero.jpg";
 import passportImg from "@/assets/services/passport.jpg";
 import licenseImg from "@/assets/services/license.jpg";

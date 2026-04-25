@@ -1,19 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Counties } from "@/components/Counties";
 
-export const Route = createFileRoute("/counties")({
-  head: () => ({
-    meta: [
-      { title: "Counties — eCitizen Kenya" },
-      { name: "description", content: "Access services from all 47 counties of Kenya through eCitizen." },
-    ],
-  }),
-  component: CountiesPage,
-});
-
-function CountiesPage() {
+export default function CountiesPage() {
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
       <SiteHeader />

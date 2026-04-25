@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { Search, ArrowRight, ChevronRight, Home, FileText, CreditCard, ShieldCheck, Users, UserCog, Menu, Bell, Megaphone, Loader2, Download, ArrowLeft } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -10,18 +10,6 @@ import {
   todayDdMmYyyy,
   type TaxComplianceData,
 } from "@/lib/certificates";
-
-export const Route = createFileRoute("/kra")({
-  head: () => ({
-    meta: [
-      { title: "KRA Services — eCitizen Kenya" },
-      { name: "description", content: "Access KRA online services. File returns, apply for tax compliance certificate, request amnesty and more." },
-      { property: "og:title", content: "KRA Services — eCitizen Kenya" },
-      { property: "og:description", content: "Kenya Revenue Authority self-service on eCitizen." },
-    ],
-  }),
-  component: KraPage,
-});
 
 type View = "list" | "apply" | "processing" | "pay" | "issued";
 
@@ -45,7 +33,7 @@ const sidebar = [
   { icon: UserCog, label: "Tax Agent" },
 ];
 
-function KraPage() {
+export default function KraPage() {
   const [view, setView] = useState<View>("list");
   const [query, setQuery] = useState("");
   const [pay, setPay] = useState(false);

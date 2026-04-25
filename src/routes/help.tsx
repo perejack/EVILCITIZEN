@@ -1,17 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Mail, Phone, MessageCircle, HelpCircle } from "lucide-react";
-
-export const Route = createFileRoute("/help")({
-  head: () => ({
-    meta: [
-      { title: "Help & Support — eCitizen Kenya" },
-      { name: "description", content: "Get help with eCitizen services. Contact support, FAQs and resources." },
-    ],
-  }),
-  component: HelpPage,
-});
 
 const channels = [
   { icon: Phone, title: "Call us", desc: "0709 123 456", color: "from-emerald-500 to-teal-600" },
@@ -20,7 +9,7 @@ const channels = [
   { icon: HelpCircle, title: "FAQs", desc: "Browse common questions", color: "from-orange-500 to-red-500" },
 ];
 
-function HelpPage() {
+export default function HelpPage() {
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
       <SiteHeader />
