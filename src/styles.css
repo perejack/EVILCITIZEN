@@ -1,0 +1,200 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-kenya-red: var(--kenya-red);
+  --color-kenya-green: var(--kenya-green);
+  --color-kenya-black: var(--kenya-black);
+  --color-kenya-teal: var(--kenya-teal);
+  --color-kenya-cream: var(--kenya-cream);
+
+  --font-display: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.875rem;
+
+  /* Kenya inspired palette */
+  --background: oklch(0.995 0.005 80);
+  --foreground: oklch(0.18 0.04 260);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.04 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.04 260);
+
+  /* Deep navy primary */
+  --primary: oklch(0.22 0.08 270);
+  --primary-foreground: oklch(0.99 0.005 80);
+
+  --secondary: oklch(0.96 0.015 80);
+  --secondary-foreground: oklch(0.22 0.08 270);
+
+  --muted: oklch(0.96 0.01 260);
+  --muted-foreground: oklch(0.5 0.03 260);
+
+  --accent: oklch(0.55 0.15 165);
+  --accent-foreground: oklch(0.99 0.005 80);
+
+  --destructive: oklch(0.58 0.22 25);
+  --destructive-foreground: oklch(0.99 0.005 80);
+
+  --border: oklch(0.92 0.01 260);
+  --input: oklch(0.92 0.01 260);
+  --ring: oklch(0.55 0.15 165);
+
+  /* Brand */
+  --kenya-red: oklch(0.55 0.22 25);
+  --kenya-green: oklch(0.55 0.17 150);
+  --kenya-black: oklch(0.18 0.02 260);
+  --kenya-teal: oklch(0.42 0.08 195);
+  --kenya-cream: oklch(0.985 0.01 80);
+
+  /* Gradients */
+  --gradient-hero: linear-gradient(135deg, oklch(0.22 0.08 270) 0%, oklch(0.32 0.10 240) 50%, oklch(0.42 0.08 195) 100%);
+  --gradient-cta: linear-gradient(135deg, oklch(0.58 0.18 150) 0%, oklch(0.50 0.16 165) 100%);
+  --gradient-warm: linear-gradient(135deg, oklch(0.65 0.18 30) 0%, oklch(0.55 0.22 25) 100%);
+  --gradient-mesh: radial-gradient(at 20% 30%, oklch(0.55 0.17 150 / 0.15) 0px, transparent 50%),
+                   radial-gradient(at 80% 20%, oklch(0.55 0.22 25 / 0.10) 0px, transparent 50%),
+                   radial-gradient(at 60% 80%, oklch(0.42 0.08 195 / 0.18) 0px, transparent 50%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 oklch(0.18 0.04 260 / 0.05);
+  --shadow-md: 0 4px 12px -2px oklch(0.18 0.04 260 / 0.08);
+  --shadow-lg: 0 12px 32px -8px oklch(0.18 0.04 260 / 0.12);
+  --shadow-glow: 0 0 40px oklch(0.55 0.17 150 / 0.25);
+  --shadow-card: 0 2px 8px -2px oklch(0.22 0.08 270 / 0.06), 0 8px 24px -8px oklch(0.22 0.08 270 / 0.08);
+
+  /* Transitions */
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-base: 0.3s var(--ease-smooth);
+}
+
+.dark {
+  --background: oklch(0.14 0.02 260);
+  --foreground: oklch(0.98 0.005 80);
+  --card: oklch(0.20 0.03 260);
+  --card-foreground: oklch(0.98 0.005 80);
+  --popover: oklch(0.20 0.03 260);
+  --popover-foreground: oklch(0.98 0.005 80);
+  --primary: oklch(0.98 0.005 80);
+  --primary-foreground: oklch(0.20 0.03 260);
+  --secondary: oklch(0.25 0.03 260);
+  --secondary-foreground: oklch(0.98 0.005 80);
+  --muted: oklch(0.25 0.03 260);
+  --muted-foreground: oklch(0.7 0.02 260);
+  --accent: oklch(0.55 0.15 165);
+  --accent-foreground: oklch(0.98 0.005 80);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-hero { background: var(--gradient-hero); }
+  .bg-gradient-cta { background: var(--gradient-cta); }
+  .bg-gradient-warm { background: var(--gradient-warm); }
+  .bg-gradient-mesh { background: var(--gradient-mesh); }
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .shadow-glow { box-shadow: var(--shadow-glow); }
+  .text-balance { text-wrap: balance; }
+  .text-gradient {
+    background: linear-gradient(135deg, oklch(0.55 0.17 150), oklch(0.42 0.08 195));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .glass {
+    background: oklch(1 0 0 / 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .glass-dark {
+    background: oklch(0.18 0.04 260 / 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .kenya-stripe {
+    background: linear-gradient(90deg,
+      var(--kenya-black) 0%, var(--kenya-black) 25%,
+      var(--kenya-red) 25%, var(--kenya-red) 50%,
+      oklch(1 0 0) 50%, oklch(1 0 0) 55%,
+      var(--kenya-green) 55%, var(--kenya-green) 100%);
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  .animate-fade-up {
+    animation: fadeUp 0.8s var(--ease-smooth) both;
+  }
+  .animate-scale-in {
+    animation: scaleIn 0.6s var(--ease-smooth) both;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}

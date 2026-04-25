@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 56" role="img" aria-label="eCitizen Kenya">
+  <defs>
+    <linearGradient id="ecg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0F8A4A"/>
+      <stop offset="1" stop-color="#0B6E3B"/>
+    </linearGradient>
+    <linearGradient id="ecr" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#D4332B"/>
+      <stop offset="1" stop-color="#B0241E"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(2,4)">
+    <circle cx="24" cy="24" r="22" fill="url(#ecg)"/>
+    <path d="M24 6 a18 18 0 0 1 0 36 a14 18 0 0 1 0 -36 z" fill="url(#ecr)" opacity="0.92"/>
+    <text x="24" y="31" text-anchor="middle" font-family="Plus Jakarta Sans, Inter, system-ui, sans-serif" font-size="20" font-weight="800" fill="#fff">e</text>
+  </g>
+  <g font-family="Plus Jakarta Sans, Inter, system-ui, sans-serif" font-weight="800">
+    <text x="58" y="32" font-size="22" fill="#0B1E3F">e</text>
+    <text x="70" y="32" font-size="22" fill="#0F8A4A">Citizen</text>
+  </g>
+  <text x="58" y="46" font-family="Inter, system-ui, sans-serif" font-size="8" font-weight="600" fill="#5b6478" letter-spacing="2">REPUBLIC OF KENYA</text>
+</svg>
