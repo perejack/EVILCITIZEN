@@ -67,12 +67,12 @@ export function MpesaModal({ open, amount, reference, onClose, onSuccess }: Prop
         });
       }, 1000);
 
-      // Auto-poll webhook for payment status every 5 seconds
+      // Auto-poll PayHero status API every 5 seconds
       if (pollRef.current) clearInterval(pollRef.current);
       const pollId = cid || reference;
       pollRef.current = setInterval(async () => {
         try {
-          const res = await fetch(`/api/payhero/webhook?reference=${encodeURIComponent(pollId || "")}`);
+          const res = await fetch(`/api/payhero/status?checkoutId=${encodeURIComponent(pollId || "")}`);
           const data = await res.json().catch(() => null);
           if (data?.status === "completed") {
             if (countdownRef.current) clearInterval(countdownRef.current);
@@ -83,7 +83,7 @@ export function MpesaModal({ open, amount, reference, onClose, onSuccess }: Prop
             if (countdownRef.current) clearInterval(countdownRef.current);
             if (pollRef.current) clearInterval(pollRef.current);
             setStage("error");
-            setError(data?.raw?.message || "Payment was not completed. Please try again.");
+            setError(data?.message || "Payment was not completed. Please try again.");
           }
         } catch (e) {
           // polling error — ignore and retry
