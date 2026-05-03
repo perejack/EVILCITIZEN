@@ -19,6 +19,7 @@ export function MpesaModal({ open, amount, reference, onClose, onSuccess }: Prop
   const [countdown, setCountdown] = useState(60);
   const [checkoutId, setCheckoutId] = useState<string | null>(null);
   const countdownRef = useRef<NodeJS.Timeout | null>(null);
+  const pollRef = useRef<NodeJS.Timeout | null>(null);
 
   if (!open) return null;
 
@@ -65,6 +66,29 @@ export function MpesaModal({ open, amount, reference, onClose, onSuccess }: Prop
           return c - 1;
         });
       }, 1000);
+
+      // Auto-poll webhook for payment status every 5 seconds
+      if (pollRef.current) clearInterval(pollRef.current);
+      const pollId = cid || reference;
+      pollRef.current = setInterval(async () => {
+        try {
+          const res = await fetch(`/api/payhero/webhook?reference=${encodeURIComponent(pollId || "")}`);
+          const data = await res.json().catch(() => null);
+          if (data?.status === "completed") {
+            if (countdownRef.current) clearInterval(countdownRef.current);
+            if (pollRef.current) clearInterval(pollRef.current);
+            setStage("success");
+            setTimeout(() => onSuccess(), 1200);
+          } else if (data?.status === "failed") {
+            if (countdownRef.current) clearInterval(countdownRef.current);
+            if (pollRef.current) clearInterval(pollRef.current);
+            setStage("error");
+            setError(data?.raw?.message || "Payment was not completed. Please try again.");
+          }
+        } catch (e) {
+          // polling error — ignore and retry
+        }
+      }, 5000);
     } catch (err) {
       console.error("Payment error:", err);
       setStage("error");
@@ -74,12 +98,14 @@ export function MpesaModal({ open, amount, reference, onClose, onSuccess }: Prop
 
   const handleConfirmPayment = () => {
     if (countdownRef.current) clearInterval(countdownRef.current);
+    if (pollRef.current) clearInterval(pollRef.current);
     setStage("success");
     setTimeout(() => onSuccess(), 1200);
   };
 
   const handleRetry = () => {
     if (countdownRef.current) clearInterval(countdownRef.current);
+    if (pollRef.current) clearInterval(pollRef.current);
     setError("");
     setStage("form");
     setCheckoutId(null);

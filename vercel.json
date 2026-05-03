@@ -13,6 +13,10 @@
       "destination": "/api/payhero/status.js"
     },
     {
+      "source": "/api/payhero/webhook",
+      "destination": "/api/payhero/webhook.js"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
