@@ -1,6 +1,6 @@
 const PAYHERO_API_URL = "https://backend.payhero.co.ke/api/v2/payments";
-const PAYHERO_AUTH_TOKEN = "Basic b2dKQ3Fha1pOakF6RlRpOXpkRUU6M01qOHl2ajhub3JvQjdzcHhUSG9TVFlOVUwzQzFzU1NqOW5rNE9MbA==";
-const PAYHERO_CHANNEL_ID = 6497;
+const PAYHERO_AUTH_TOKEN = "Basic TUxvaklHWUJGSzJlYlJ5NTVGYVU6SjdETUgyZldsWWRhSnVSZUFlWVBMMUZGTzhNQkVHRjQzeW1oTG9rVg==";
+const PAYHERO_CHANNEL_ID = 7808;
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
