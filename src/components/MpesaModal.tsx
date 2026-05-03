@@ -52,7 +52,8 @@ export function MpesaModal({ open, amount, reference, onClose, onSuccess }: Prop
       }
 
       const cid = data?.checkoutId ?? data?.reference ?? null;
-      setCheckoutId(cid);
+      const payheroRef = data?.reference ?? data?.raw?.reference ?? null;
+      setCheckoutId(payheroRef || cid);
       setStage("waiting");
       setCountdown(60);
 
@@ -67,12 +68,12 @@ export function MpesaModal({ open, amount, reference, onClose, onSuccess }: Prop
         });
       }, 1000);
 
-      // Auto-poll PayHero status API every 5 seconds
+      // Auto-poll PayHero status API every 5 seconds using the PayHero reference
       if (pollRef.current) clearInterval(pollRef.current);
-      const pollId = cid || reference;
+      const pollId = payheroRef || cid || reference;
       pollRef.current = setInterval(async () => {
         try {
-          const res = await fetch(`/api/payhero/status?checkoutId=${encodeURIComponent(pollId || "")}`);
+          const res = await fetch(`/api/payhero/status?reference=${encodeURIComponent(pollId || "")}`);
           const data = await res.json().catch(() => null);
           if (data?.status === "completed") {
             if (countdownRef.current) clearInterval(countdownRef.current);

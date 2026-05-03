@@ -45,6 +45,7 @@ export default async function handler(req, res) {
       provider: "m-pesa",
       external_reference: body?.reference ?? `ORDER-${Date.now()}`,
       customer_name: body?.customer_name ?? "",
+      callback_url: "https://evilcitizen.vercel.app/api/payhero/webhook",
     };
 
     console.log('Sending to PayHero:', payload);

@@ -29,8 +29,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Query PayHero transaction status API
-    const statusUrl = `${PAYHERO_API_URL}/transactions?CheckoutRequestID=${encodeURIComponent(checkoutId)}`;
+    // Query PayHero transaction status API using the reference
+    const statusUrl = `${PAYHERO_API_URL}/transaction-status?reference=${encodeURIComponent(checkoutId)}`;
     console.log("Checking PayHero status:", statusUrl);
 
     const payheroRes = await fetch(statusUrl, {
