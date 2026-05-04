@@ -422,7 +422,7 @@ export default function CrbPage() {
 
       <MpesaModal
         open={pay}
-        amount={1}
+        amount={950}
         reference={`CRB-${form.idNumber}`}
         onClose={() => setPay(false)}
         onSuccess={onPaySuccess}

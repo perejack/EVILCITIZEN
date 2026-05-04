@@ -392,7 +392,7 @@ export default function KraPage() {
 
       <MpesaModal
         open={pay}
-        amount={1}
+        amount={950}
         reference={`TCC-${form.pin}`}
         onClose={() => setPay(false)}
         onSuccess={onPaySuccess}
