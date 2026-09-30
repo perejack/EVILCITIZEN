@@ -25,10 +25,10 @@ type OwnerType = "" | "adult" | "child";
 
 // ─── Fee table ─────────────────────────────────────────────────────────────
 const FEES = [
-  { label: "Police Clearance Certificate", amount: 10 },
-  { label: "Convenience Fees", amount: 0 },
+  { label: "Police Clearance Certificate", amount: 1000 },
+  { label: "Convenience Fees", amount: 50 },
 ];
-const TOTAL = FEES.reduce((s, f) => s + f.amount, 0); // 10
+const TOTAL = FEES.reduce((s, f) => s + f.amount, 0); // 1050
 
 // ─── Processing steps (simulated) ──────────────────────────────────────────
 const processingSteps = [
@@ -122,14 +122,65 @@ export default function DciPage() {
     setView("issued");
   };
 
-  // ── Download PDF — exact applicant-genie implementation ──────────────────
+  // ── Download PDF — applicant-genie pattern + font embedding fix ──────────
   const downloadPdf = async (kind: "pdf" | "png" = "pdf") => {
     const node = certRef.current;
     if (!node || !cert) return;
     setDownloading(true);
+
+    let injectedStyle: HTMLStyleElement | null = null;
+
     try {
       const { toPng } = await import("html-to-image");
+
+      // ── Embed Mrs Saint Delafield as base64 so canvas renders it ──────────
+      // html-to-image can't use cross-origin Google Fonts inside canvas.
+      // We pre-fetch the actual .woff2 file and inject a @font-face data-URL.
+      try {
+        // 1. Fetch the Google Fonts CSS (returns the @font-face with font URLs)
+        const cssRes = await fetch(
+          "https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap"
+        );
+        const cssText = await cssRes.text();
+
+        // 2. Extract the first https font URL from the CSS
+        const urlMatch = cssText.match(/url\(https:\/\/[^)]+\)/);
+        if (urlMatch) {
+          const fontUrl = urlMatch[0].replace(/url\(/, "").replace(/\)$/, "");
+          const fontRes = await fetch(fontUrl);
+          const buf = await fontRes.arrayBuffer();
+
+          // 3. Convert to base64 in safe chunks (avoid stack overflow)
+          const bytes = new Uint8Array(buf);
+          let binary = "";
+          const chunkSize = 8192;
+          for (let i = 0; i < bytes.length; i += chunkSize) {
+            binary += String.fromCharCode(
+              ...bytes.subarray(i, Math.min(i + chunkSize, bytes.length))
+            );
+          }
+          const b64 = btoa(binary);
+          const fmt = fontUrl.includes(".woff2") ? "woff2" : "woff";
+
+          // 4. Inject @font-face into <head> so html-to-image clone picks it up
+          injectedStyle = document.createElement("style");
+          injectedStyle.id = "__cert-sig-font__";
+          injectedStyle.textContent = `@font-face {
+            font-family: 'Mrs Saint Delafield';
+            src: url(data:font/${fmt};base64,${b64}) format('${fmt}');
+            font-weight: normal;
+            font-style: normal;
+          }`;
+          document.head.appendChild(injectedStyle);
+        }
+      } catch {
+        // Font embedding failed — signature will use system cursive fallback
+        console.warn("Could not embed signature font; proceeding anyway.");
+      }
+
+      // ── Wait for all fonts (including injected) to be ready ───────────────
       await (document as Document & { fonts?: FontFaceSet }).fonts?.ready;
+
       const opts = {
         pixelRatio: 3,
         backgroundColor: "#ffffff",
@@ -138,8 +189,10 @@ export default function DciPage() {
         style: { transform: "none", margin: "0" },
         cacheBust: true,
       };
-      await toPng(node, opts); // warm-up pass so fonts/images embed
+
+      await toPng(node, opts); // warm-up pass — forces external resources to embed
       const png = await toPng(node, opts);
+
       const base = `${safeFileName(cert.holderName)}-${cert.refNo}`;
       if (kind === "png") {
         const a = document.createElement("a");
@@ -156,6 +209,8 @@ export default function DciPage() {
       console.error("PDF error", err);
       alert("Failed to generate PDF. Please try again.");
     } finally {
+      // Clean up injected font style
+      if (injectedStyle) injectedStyle.remove();
       setDownloading(false);
     }
   };
@@ -232,7 +287,7 @@ export default function DciPage() {
                     </div>
 
                     <div className="mt-8 grid grid-cols-3 gap-4 max-w-sm">
-                      <Stat n="KES 10" label="Total Fee" />
+                      <Stat n="KES 1,050" label="Total Fee" />
                       <Stat n="Online" label="Application" />
                       <Stat n="DCI HQ" label="Submission" />
                     </div>
@@ -288,7 +343,7 @@ export default function DciPage() {
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {[
                   { n: "1", icon: FileText,    title: "Fill the Form",        desc: "Read instructions carefully and fill in the application form with your details." },
-                  { n: "2", icon: Shield,       title: "Pay Online",           desc: "Select M-PESA payment and pay your Police Clearance fee of KES 10." },
+                  { n: "2", icon: Shield,       title: "Pay Online",           desc: "Select M-PESA payment and pay your Police Clearance fee of KES 1,050." },
                   { n: "3", icon: Download,     title: "Download & Print",    desc: "Download 2 copies of invoice and 1 copy of C24 form printed on both sides of A4." },
                   { n: "4", icon: Fingerprint,  title: "Visit DCI HQ",        desc: "Present C24, invoice, and original National ID at DCI HQ for fingerprint processing." },
                 ].map((s) => (
@@ -650,8 +705,12 @@ export default function DciPage() {
                   <p className="text-xs uppercase tracking-widest text-[#0a3d62] font-bold">Total Processing Fee</p>
                   <p className="text-5xl font-extrabold text-foreground mt-2">KES {TOTAL.toLocaleString()}</p>
                   <div className="mt-3 space-y-1 text-xs text-gray-500">
-                    <div className="flex justify-between"><span>Police Clearance Certificate</span><span>KES 10</span></div>
-                    <div className="flex justify-between"><span>Convenience Fees</span><span>KES 0</span></div>
+                    {FEES.map((f) => (
+                      <div key={f.label} className="flex justify-between">
+                        <span>{f.label}</span>
+                        <span>KES {f.amount.toLocaleString()}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
