@@ -533,20 +533,6 @@ export default function DciPage() {
                     </div>
                   </div>
 
-                  {/* Fee summary */}
-                  <div className="rounded-xl bg-blue-50 border border-blue-200 p-4 mb-6">
-                    <p className="text-xs font-bold text-blue-700 uppercase tracking-widest mb-3">Processing Fee</p>
-                    {FEES.map((f) => (
-                      <div key={f.label} className="flex justify-between text-sm text-blue-800 mb-1">
-                        <span>{f.label}</span>
-                        <span className="font-semibold">KES {f.amount.toLocaleString()}</span>
-                      </div>
-                    ))}
-                    <div className="border-t border-blue-200 mt-2 pt-2 flex justify-between font-bold text-blue-900">
-                      <span>Total</span>
-                      <span>KES {TOTAL.toLocaleString()}</span>
-                    </div>
-                  </div>
 
                   <div className="flex justify-between">
                     <button

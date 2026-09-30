@@ -240,15 +240,8 @@ export function MpesaModal({ open, amount, reference, onClose, onSuccess }: Prop
               )}
 
               <button
-                onClick={handleConfirmPayment}
-                className="mt-5 w-full py-3 rounded-xl bg-gradient-to-r from-[#00A859] to-[#007F3F] text-white font-bold shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5"
-              >
-                I have completed payment
-              </button>
-
-              <button
                 onClick={handleRetry}
-                className="mt-2 text-xs text-muted-foreground hover:text-foreground flex items-center justify-center gap-1 mx-auto"
+                className="mt-5 text-xs text-muted-foreground hover:text-foreground flex items-center justify-center gap-1 mx-auto"
               >
                 <RefreshCw className="h-3 w-3" /> Resend STK Push
               </button>
