@@ -543,9 +543,9 @@ export default function DciPage() {
                     </button>
                     <button
                       onClick={submitApplication}
-                      className="px-7 py-2.5 rounded bg-[#2e7d32] text-white text-sm font-bold hover:bg-[#1b5e20] transition-colors flex items-center gap-2"
+                      className="px-7 py-2.5 rounded bg-[#2e7d32] text-white text-sm font-bold hover:bg-[#1b5e20] transition-colors"
                     >
-                      Submit & Pay KES {TOTAL.toLocaleString()} <ArrowRight className="h-4 w-4" />
+                      SUBMIT
                     </button>
                   </div>
                 </div>
