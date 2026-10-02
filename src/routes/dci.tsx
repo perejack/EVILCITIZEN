@@ -25,10 +25,10 @@ type OwnerType = "" | "adult" | "child";
 
 // ─── Fee table ─────────────────────────────────────────────────────────────
 const FEES = [
-  { label: "Police Clearance Certificate", amount: 1000 },
-  { label: "Convenience Fees", amount: 50 },
+  { label: "Police Clearance Certificate", amount: 10 },
+  { label: "Convenience Fees", amount: 0 },
 ];
-const TOTAL = FEES.reduce((s, f) => s + f.amount, 0); // 1050
+const TOTAL = FEES.reduce((s, f) => s + f.amount, 0); // 10
 
 // ─── Processing steps (simulated) ──────────────────────────────────────────
 const processingSteps = [
@@ -287,7 +287,7 @@ export default function DciPage() {
                     </div>
 
                     <div className="mt-8 grid grid-cols-3 gap-4 max-w-sm">
-                      <Stat n="KES 1,050" label="Total Fee" />
+                      <Stat n="KES 10" label="Total Fee" />
                       <Stat n="Online" label="Application" />
                       <Stat n="DCI HQ" label="Submission" />
                     </div>
@@ -343,7 +343,7 @@ export default function DciPage() {
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {[
                   { n: "1", icon: FileText,    title: "Fill the Form",        desc: "Read instructions carefully and fill in the application form with your details." },
-                  { n: "2", icon: Shield,       title: "Pay Online",           desc: "Select M-PESA payment and pay your Police Clearance fee of KES 1,050." },
+                  { n: "2", icon: Shield,       title: "Pay Online",           desc: "Select M-PESA payment and pay your Police Clearance fee of KES 10." },
                   { n: "3", icon: Download,     title: "Download & Print",    desc: "Download 2 copies of invoice and 1 copy of C24 form printed on both sides of A4." },
                   { n: "4", icon: Fingerprint,  title: "Visit DCI HQ",        desc: "Present C24, invoice, and original National ID at DCI HQ for fingerprint processing." },
                 ].map((s) => (
